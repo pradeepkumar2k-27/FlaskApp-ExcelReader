@@ -1,2 +1,3 @@
-# FlaskApp-ExcelReader
-A web application to read and write to excel files
+Excel Reader
+----------------------
+A web application devoloped using Flask to read from and write to excel files
