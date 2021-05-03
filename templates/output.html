@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>Excel Reader ---> {{ fileName }}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+            .table__layout{
+                border-spacing: 0;
+                background-color: #f5f5f5;
+                width: 60%;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 20px;
+                border: 2px solid rgb(61, 61, 61);
+            }
+
+            .table__row:nth-child(even){
+                background-color: #e5e5e5;
+            }
+
+            .table__columnName{
+                text-align: left;
+            }
+
+            .table__cell{
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body style="background-color:rgb(255, 255, 255)" >
+        </br>
+        </br>
+        <div id="addData" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+          
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-columnName">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Enter Details</h4>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <form  method='POST' action="/output" >
+                    <input type="hidden" name="fileName" value="{{ fileName }}" />
+                    {% for columnName in columnNames %}
+                    <b style="font-size: medium;">{{ columnName }}</b></br>
+                    <input type='text' name='{{ columnName }}' placeholder='Enter {{ columnName}}' id='{{ columnName }}' class="form-control" /></br>
+                    {% endfor %}
+                    <input type="submit" style="background: rgb(87, 87, 87); border-color: rgb(87, 87, 87);" class="btn btn-success " id="newData" name="newData" value="Submit"/>
+                  </form>
+                  </p>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+    
+        <table class="table__layout">
+        <thead>
+          <caption style="text-align: center; font-weight: bold;">{{ fileName }}</caption>
+        <tr class="table__columnName">
+            {% for columnName in columnNames %}
+            <th class="table__cell">{{ columnName }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data %}
+        <tr class="table__row"> 
+            {% for cell in row %}
+            <td class="table__cell">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+
+        <div style="background-color:rgb(255, 255, 255); height:20%; text-align: center;">
+            <button type="button"  style="margin: 60px 0px 10px 10px; background: rgb(87, 87, 87); border-color: rgb(87, 87, 87);" class="btn btn-info" data-toggle="modal" data-target="#addData">Add new data</button>
+            <a href="/" target="blank"><button type="submit"  style="margin: 60px 0px 10px 10px; background: rgb(87, 87, 87); border-color: rgb(87, 87, 87);" class="btn btn-info" >Open another file</button></a>
+            <a href="/download/{{ fileName }}" target="blank"><button style="margin: 60px 0px 10px 10px; background: rgb(87, 87, 87); color: rgb(255, 255, 255);" class='btn  btn-basic'>Download file</button></a>
+        </div>
+    </body>
+
+  </html>
